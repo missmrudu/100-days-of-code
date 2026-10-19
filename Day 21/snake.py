@@ -1,57 +1,52 @@
-from turtle import Turtle,Screen
-STARTING_POSITIONS = [(0,0), (-20,0),(-40,0)]
+from turtle import Turtle
 MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
-RIGHT = 0
 LEFT = 180
-
+RIGHT = 0
 class Snake:
-
     def __init__(self):
-        self.segments = []
-        self.create_snake()
-        self.head = self.segments[0]
+        self.snake_body = []
+        self.snake_skin()
+        self.head = self.snake_body[0]
 
-    def create_snake(self):
-        for position in STARTING_POSITIONS:
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(position)
-            self.segments.append(new_segment)
+    def snake_skin(self):
+        for turtle_index in range(0, 3):
+            new_body = Turtle(shape='square')
+            new_body.color('white')
+            new_body.penup()
+            new_body.goto(x=(turtle_index * -20), y=0)
+            self.snake_body.append(new_body)
 
-    def add_segment(self,position):
-        new_segment = Turtle("square")
-        new_segment.color("white")
-        new_segment.penup()
-        new_segment.goto(position)
-        self.segments.append(new_segment)
 
-    def extend(self):
-        self.add_segment(self.segments[-1].position())
+
+    def extend(self,):
+        for turtle_index in range(0, 1):
+            new_body = Turtle(shape='square')
+            new_body.color('white')
+            new_body.penup()
+            new_body.goto(self.snake_body[-1].position())
+            self.snake_body.append(new_body)
+
+
     def move(self):
-        for seg_num in range(len(self.segments) - 1, 0, -1):
-            new_x = self.segments[seg_num - 1].xcor()
-            new_y = self.segments[seg_num - 1].ycor()
-            self.segments[seg_num].goto(new_x, new_y)
-        self.head.forward(MOVE_DISTANCE)
+        for body in range(len(self.snake_body) - 1, 0, -1, ):
+            new_x = self.snake_body[body - 1].xcor()
+            new_y = self.snake_body[body - 1].ycor()
+            self.snake_body[body].goto(new_x, new_y)
+        return self.snake_body[0].forward(MOVE_DISTANCE)
 
-    def up(self):
+
+
+    def Up(self):
         if self.head.heading() != DOWN:
-            self.head.setheading(UP)
-
-
-    def down(self):
+            return self.head.setheading(90)
+    def Down(self):
         if self.head.heading() != UP:
-            self.head.setheading(DOWN)
-
-
-    def left(self):
+            return self.head.setheading(270)
+    def Left(self):
         if self.head.heading() != RIGHT:
-            self.head.setheading(LEFT)
-
-
-    def right(self):
+            return self.head.setheading(180)
+    def Right(self):
         if self.head.heading() != LEFT:
-            self.head.setheading(RIGHT)
+            return self.head.setheading(0)

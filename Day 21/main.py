@@ -1,48 +1,47 @@
-from turtle import Turtle, Screen
-
-from scoreboard import Scoreboard
-from snake import Snake
-from food import Food
-from scoreboard import Scoreboard
+import turtle
 import time
+from food import Food
+from snake import Snake
+from turtle import Turtle
+from scoreboard import ScoreBoard
 
-screen = Screen()
-screen.setup(width=600, height=600)
-screen.bgcolor("black")
-screen.title("My Snake Game")
-screen.tracer(0)
+turtle.setup(width=600, height=600)
+turtle.bgcolor('black')
+turtle.title('My Snake Game')
+tim = Turtle()
+turtle.tracer(0)
 
-snake =Snake()
+snake = Snake()
 food = Food()
-scoreboard = Scoreboard()
 
-screen.listen()
-screen.onkey(fun = snake.up, key = "Up")
-screen.onkey(fun =snake.down, key = "Down")
-screen.onkey(fun = snake.left, key = "Left")
-screen.onkey(fun = snake.right, key = "Right")
-
+scoreboard = ScoreBoard()
+turtle.onkey(snake.Up, 'Up')
+turtle.onkey(snake.Down, 'Down')
+turtle.onkey(snake.Left, 'Left')
+turtle.onkey(snake.Right, 'Right')
 
 game_is_on = True
 while game_is_on:
-    screen.update()
+    turtle.update()
     time.sleep(0.1)
+    turtle.listen()
     snake.move()
 
-if snake.head.distance(food) < 15:
-    food.refresh()
-    snake.extend()
-    scoreboard.increase_score()
 
+    if snake.head.distance(food) < 15:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
 
-if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-    game_is_on = False
-
-for segment in snake.segments:
-    if segment == snake.head:
-        pass
-    elif snake.head.distance(segment) < 10:
+    if snake.head.xcor() > 280 or snake.head.xcor() < -300 or snake.head.ycor() > 280 or snake.head.ycor() < -300:
         game_is_on = False
-        scoreboard.game_over()
+        scoreboard.gameover()
 
-screen.exitonclick()
+    for body in snake.snake_body[1:]:
+        if snake.head.distance(body) < 10:
+            game_is_on = False
+            scoreboard.gameover()
+
+
+turtle.exitonclick()
+print(f"your total score is {scoreboard.score}")
