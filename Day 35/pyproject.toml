@@ -1,0 +1,9 @@
+[project]
+name = "day-35"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "python-dotenv>=1.2.4",
+    "requests>=2.34.2",
+    "twilio-api>=0.1.1",
+]
